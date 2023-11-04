@@ -1,26 +1,24 @@
-package P04FirstAndReserveTeam;
+package P04PizzaCalories;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        int n = Integer.parseInt(reader.readLine());
-
-        Team team = new Team("Black Eagles");
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
 
-        for (int i = 0; i < n; i++) {
-            String[] input = reader.readLine().split(" ");
-            Person person = new Person(input[0], input[1], Integer.parseInt(input[2]), Double.parseDouble(input[3]));
-            team.addPlayer(person);
+        String[] pizzaData = scanner.nextLine().split(" ");
+        Pizza pizza = new Pizza(pizzaData[1], Integer.parseInt(pizzaData[2]));
+        String[] doughData = scanner.nextLine().split(" ");
+        Dough dough = new Dough(doughData[1], doughData[2], Double.parseDouble(doughData[3]));
+        pizza.setDough(dough);
+        String command;
+        while (!"END".equals(command = scanner.nextLine())) {
+            String[] toppingData = command.split(" ");
+            Topping topping = new Topping(toppingData[1], Double.parseDouble(toppingData[2]));
+            pizza.addTopping(topping);
         }
-
-        System.out.printf("First team have %d players\n", team.getFirstTeam().size());
-        System.out.printf("Reserve team have %d players\n", team.getReserveTeam().size());
+        System.out.printf("%s - %.2f\n", pizza.getName(), pizza.getOverallCalories());
     }
 }
+
