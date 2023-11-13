@@ -1,0 +1,45 @@
+package vehicle;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String [] input = scanner.nextLine().split("\\s+");
+        double fuelQuantity = Double.parseDouble(input[1]);
+        double fuelConsumption = Double.parseDouble(input[2]);
+        Vehicle car = new Car(fuelQuantity,fuelConsumption);
+
+        input = scanner.nextLine().split("\\s+");
+
+        double quantity = Double.parseDouble(input[1]);
+        double consumption = Double.parseDouble(input[2]);
+        Vehicle truck = new Truck(quantity, consumption);
+
+        Map<String, Vehicle> vehicleMap = new LinkedHashMap<>();
+        vehicleMap.put("Car", car);
+        vehicleMap.put("Truck", truck);
+        int n = Integer.parseInt(scanner.nextLine());
+
+        for (int i = 0; i < n; i++) {
+            input = scanner.nextLine().split("\\s+");
+            String commandType = input[0];
+            String vehicleType = input[1];
+            switch (commandType){
+                case "Drive":
+                    double distance = Double.parseDouble(input[2]);
+                    System.out.println(vehicleMap.get(vehicleType).drive(distance));
+                    break;
+                case "Refuel":
+                    double liters = Double.parseDouble(input[2]);
+                    vehicleMap.get(vehicleType).refuel(liters);
+                    break;
+            }
+
+        }
+        vehicleMap.values().stream().forEach(System.out::println);
+    }
+}
